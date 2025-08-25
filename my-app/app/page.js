@@ -6,7 +6,7 @@ import { Profile } from "@/componentes/profile";
 export default function Home() {
   return (
     <div>
-      <h1>olaaaaaaa</h1>
+      <h1>Sejam bem-vendos! Me chamo Layza Nicolle.</h1>
       <Profile />
     </div>
   );
