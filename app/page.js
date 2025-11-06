@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Badge from "./components/Badge.jsx";
+import Badge from "@/components/Badge.jsx";
 import { miniBio, stack, projectHighlights } from "@/lib/data";
 
 export default function Home() {
