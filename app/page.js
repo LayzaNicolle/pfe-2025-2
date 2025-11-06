@@ -10,8 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchQuote() {
-      const res = await fetch("https://zenquotes.io/api/random");
-      if (!res.ok) return;
+      const res = await fetch("https://api.quotable.io/random");
       const data = await res.json();
       const q = Array.isArray(data) ? data[0] : null;
       if (q) setQuote(`${q.q} — ${q.a}`);
