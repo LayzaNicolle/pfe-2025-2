@@ -1,18 +1,25 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import Badge from "@/components/Badge";
+import Badge from "./components/Badge";
 import { miniBio, stack, projectHighlights } from "@/lib/data";
 
-async function getQuote() {
-  // Server-side fetch to a free public API
-  const res = await fetch("https://zenquotes.io/api/random", { cache: "no-store" });
-  if (!res.ok) return null;
-  const data = await res.json();
-  const q = Array.isArray(data) ? data[0] : null;
-  return q ? `${q.q} — ${q.a}` : null;
-}
+export default function Home() {
+  const [quote, setQuote] = useState(null);
 
-export default async function Home() {
-  const quote = await getQuote();
+  useEffect(() => {
+    async function fetchQuote() {
+      const res = await fetch("https://zenquotes.io/api/random");
+      if (!res.ok) return;
+      const data = await res.json();
+      const q = Array.isArray(data) ? data[0] : null;
+      if (q) setQuote(`${q.q} — ${q.a}`);
+    }
+
+    fetchQuote();
+  }, []);
+
   return (
     <section className="space-y-10">
       <div className="card p-8 mt-6">
@@ -22,12 +29,20 @@ export default async function Home() {
         </h1>
         <p className="mt-2 text-lg text-white/80">{miniBio.role}</p>
         <p className="mt-6 text-white/80 max-w-2xl">{miniBio.intro}</p>
+
         <div className="mt-6 flex flex-wrap gap-2">
-          {stack.slice(0, 8).map(s => <Badge key={s}>{s}</Badge>)}
+          {stack.slice(0, 8).map((s) => (
+            <Badge key={s}>{s}</Badge>
+          ))}
         </div>
+
         <div className="mt-8 flex gap-3">
-          <Link href="/projetos" className="px-4 py-2 rounded-xl bg-primary hover:opacity-90">Ver projetos</Link>
-          <Link href="/sobre" className="px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10">Sobre o site</Link>
+          <Link href="/projetos" className="px-4 py-2 rounded-xl bg-primary hover:opacity-90">
+            Ver projetos
+          </Link>
+          <Link href="/sobre" className="px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10">
+            Sobre o site
+          </Link>
         </div>
       </div>
 
